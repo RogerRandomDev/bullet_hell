@@ -8,8 +8,8 @@ extends KinematicBody2D
 var fire_point=Vector2.ZERO
 var fire_rotation=Vector2.ZERO
 var fire_angle = 30
-export (int,1,20) var bullet_count = 3
-
+export (int,1,30) var bullet_count = 3
+export (float) var spin_speed = 1.0
 export var fire_type = 0
 export var spin_rate = 0.0
 onready var fire_origin = get_parent()
@@ -34,11 +34,11 @@ func _ready():
 func _process(delta):
 # warning-ignore:return_value_discarded
 	move_and_collide(movement*move_speed*delta)
-	position.x = clamp(position.x,16,496)
+	position.x = clamp(position.x,16,368)
 	position.y = clamp(position.y,75,525)
-	emitter.fire_rotation = position.angle_to_point(get_global_mouse_position())+PI
+	emitter.fire_rotation = position.angle_to_point(get_parent().get_parent().get_parent().get_global_mouse_position()-Vector2(128,0))+PI
 	emitter.fire_point = position
-	spin_rate += delta*PI/2
+	spin_rate += delta*PI/2*spin_speed
 	if spin_rate>=2*PI:spin_rate=0
 	emitter.spin_rate = spin_rate
 	if auto_spin:
@@ -54,7 +54,7 @@ func _input(event):
 	if !event is InputEventKey:return
 	movement = Vector2(
 		int(Input.is_action_pressed("right"))-int(Input.is_action_pressed("left")),
-		int(Input.is_action_pressed("down"))-int(Input.is_action_pressed("up"))
+		int(Input.is_action_pressed("down"))-int(Input.is_action_pressed("up"))*0.5
 	)
 	$Tween.interpolate_method($Sprite,'fly_in_direction',$Sprite.material.get_shader_param('mouse_position'),movement*Vector2(64,16),0.375,Tween.TRANS_LINEAR)
 	$Tween.start()

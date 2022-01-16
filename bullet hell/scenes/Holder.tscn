@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/Holder.gd" type="Script" id=1]
 
@@ -8,6 +8,18 @@ shadow_size = 16
 
 [sub_resource type="Theme" id=4]
 Panel/styles/panel = SubResource( 5 )
+
+[sub_resource type="Environment" id=7]
+background_mode = 4
+background_canvas_max_layer = 4
+ssao_radius = 24.59
+glow_hdr_threshold = 1.74
+adjustment_enabled = true
+adjustment_contrast = 2.0
+adjustment_saturation = 2.0
+
+[sub_resource type="World" id=6]
+environment = SubResource( 7 )
 
 [node name="Holder" type="Control"]
 anchor_right = 1.0
@@ -34,18 +46,55 @@ theme = SubResource( 4 )
 [node name="g" type="ViewportContainer" parent="HBoxContainer"]
 show_behind_parent = true
 margin_left = 128.0
-margin_right = 640.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 512, 600 )
-
-[node name="Viewport" type="Viewport" parent="HBoxContainer/g"]
-size = Vector2( 512, 600 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="r" type="Panel" parent="HBoxContainer"]
-margin_left = 640.0
-margin_right = 1024.0
+margin_right = 512.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 384, 600 )
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/g"]
+size = Vector2( 384, 600 )
+world = SubResource( 6 )
+handle_input_locally = false
+usage = 0
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+
+[node name="Camera2D" type="Camera2D" parent="HBoxContainer/g/Viewport"]
+anchor_mode = 0
+current = true
+
+[node name="r" type="Panel" parent="HBoxContainer"]
+margin_left = 512.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 512, 600 )
 theme = SubResource( 4 )
+
+[node name="0" type="HBoxContainer" parent="HBoxContainer/r"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" type="VBoxContainer" parent="HBoxContainer/r/0"]
+margin_right = 256.0
+margin_bottom = 100.0
+
+[node name="Name" type="Label" parent="HBoxContainer/r/0/0"]
+margin_right = 256.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 256, 64 )
+text = "GAME NAME HERE"
+align = 1
+valign = 1
+
+[node name="Score" type="Label" parent="HBoxContainer/r/0/0"]
+margin_top = 68.0
+margin_right = 256.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 256, 32 )
+text = "SCORE:
+0"
+align = 1
+valign = 1

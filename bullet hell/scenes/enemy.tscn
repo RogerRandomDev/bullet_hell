@@ -7,7 +7,9 @@
 extents = Vector2( 32, 32 )
 
 [node name="enemy" type="KinematicBody2D"]
+collision_mask = 0
 script = ExtResource( 1 )
+move_mode = "test1"
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

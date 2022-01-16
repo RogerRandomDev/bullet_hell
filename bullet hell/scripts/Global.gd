@@ -5,4 +5,4 @@ var bullet_shape = RectangleShape2D.new()
 const bullet_scene = preload("res://scenes/bullet.tscn")
 const emitter = preload("res://scripts/emitter.gd").emitter
 func _ready():
-	bullet_shape.extents = Vector2(6,8)
+	bullet_shape.extents = Vector2(3,4)
